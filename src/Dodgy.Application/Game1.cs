@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -8,6 +9,8 @@ namespace Dodgy.Application
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        private List<Player> _players;
 
         public Game1()
         {
@@ -19,6 +22,29 @@ namespace Dodgy.Application
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            _players = new List<Player>()
+            {
+                new Player(_graphics.GraphicsDevice, 100, 20)
+                {
+                    Input = new Input
+                    {
+                        Up = Keys.W,
+                        Down = Keys.S,
+                        Left = Keys.A,
+                        Right = Keys.D
+                    }
+                },
+                new Player(_graphics.GraphicsDevice, 10, 20)
+                {
+                    Input = new Input
+                    {
+                        Up = Keys.Up,
+                        Down = Keys.Down,
+                        Left = Keys.Left,
+                        Right = Keys.Right
+                    }
+                }
+            };
 
             base.Initialize();
         }
@@ -37,12 +63,25 @@ namespace Dodgy.Application
 
             // TODO: Add your update logic here
 
+            foreach (var player in _players)
+            {
+                player.Update((float)gameTime.ElapsedGameTime.TotalSeconds, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+            }
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            _spriteBatch.Begin();
+
+            foreach (var player in _players)
+            {
+                player.Draw(_spriteBatch);
+            }
+            _spriteBatch.End();
 
             // TODO: Add your drawing code here
 
