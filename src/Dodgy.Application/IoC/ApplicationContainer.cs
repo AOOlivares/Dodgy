@@ -18,12 +18,6 @@ namespace Dodgy.Application.Ioc
             _serviceCollection = new ServiceCollection();
         }
 
-        public void ConfigureServices(IServiceCollection serviceCollection)
-        {
-            serviceCollection
-                .AddConfiguration(_configurationRoot);
-        }
-
         public object GetService(Type serviceType)
         {
             if (_serviceProvider != null)
@@ -34,6 +28,14 @@ namespace Dodgy.Application.Ioc
             ConfigureServices(_serviceCollection);
             _serviceProvider = _serviceCollection.BuildServiceProvider();
             return _serviceProvider.GetService(serviceType);
+        }
+
+        private void ConfigureServices(IServiceCollection serviceCollection)
+        {
+            serviceCollection
+                .AddConfiguration(_configurationRoot)
+                .AddSprite()
+                .AddMonogame();
         }
 
         private IConfigurationRoot BuildConfigurationRoot() =>

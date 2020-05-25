@@ -8,7 +8,9 @@ namespace Dodgy.Application
         [STAThread]
         static void Main()
         {
-            using (var game = new Game1())
+            var container = ApplicationContainer.Instance;
+            var game = (Game1)container.GetService(typeof(Game1));
+            using (game)
                 game.Run();
         }
     }

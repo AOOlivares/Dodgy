@@ -2,20 +2,19 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Dodgy.Application
+namespace Dodgy.Application.Sprite
 {
-    public class Input
+    public interface IPlayer
     {
-        public Keys Up { get; set; }
-        public Keys Down { get; set; }
-        public Keys Left { get; set; }
-        public Keys Right { get; set; }
+        void Update(float elapsedSeconds, int preferredBackBufferWidth, int preferredBackBufferHeight);
+        void Draw(SpriteBatch spriteBatch);
     }
 
-    public class Player
+    public class Player : IPlayer
     {
         public Input Input;
         private Texture2D _texture;
+        private readonly IMovement _movement;
         private Vector2 Position;
         private float _speed = 500f;
         private int _width = 10;
@@ -36,6 +35,7 @@ namespace Dodgy.Application
         public void Move(float speed, float elapsedSeconds, int preferredBackBufferWidth, int preferredBackBufferHeight)
         {
             var state = Keyboard.GetState();
+
             if (state.IsKeyDown(Input.Up))
             {
                 Position.Y -= speed * (float)elapsedSeconds;
