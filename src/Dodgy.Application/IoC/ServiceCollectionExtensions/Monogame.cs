@@ -1,5 +1,5 @@
 using Dodgy.Application.Sprite;
-using Microsoft.Extensions.Configuration;
+using Dodgy.Application.Window;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,6 +25,12 @@ namespace Dodgy.Application.Ioc.ServiceCollectionExtensions
                 {
                     var game1 = serviceProvider.GetService<Game1>();
                     return game1.Graphics;
+                })
+                .AddSingleton<IWindow>(serviceProvider =>
+                {
+                    var game1 = serviceProvider.GetService<Game1>();
+
+                    return new Window.Window(game1.Graphics.PreferredBackBufferWidth, game1.Graphics.PreferredBackBufferHeight);
                 });
 
             return services;
