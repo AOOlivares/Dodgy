@@ -9,6 +9,7 @@ namespace Dodgy.Application.Ioc.ServiceCollectionExtensions
         {
             services
                 .AddTransient<IPlayer, Player>()
+                .AddTransient<IMovement, Movement>()
                 .AddTransient<IPlayerFactory, PlayerFactory>();
 
             return services;

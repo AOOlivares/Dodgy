@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 using Dodgy.Application.Ioc;
 
 namespace Dodgy.Application
@@ -9,7 +10,7 @@ namespace Dodgy.Application
         static void Main()
         {
             var container = ApplicationContainer.Instance;
-            var game = (Game1)container.GetService(typeof(Game1));
+            var game = container.GetService<Game1>();
             using (game)
                 game.Run();
         }

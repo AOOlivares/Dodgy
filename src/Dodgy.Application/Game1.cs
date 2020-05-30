@@ -16,7 +16,11 @@ namespace Dodgy.Application
 
         public Game1()
         {
+            var a = Window.ClientBounds;
             Graphics = new GraphicsDeviceManager(this);
+            Graphics.PreferredBackBufferHeight = 600;
+            Graphics.PreferredBackBufferWidth = 600;
+            Graphics.ApplyChanges();
             Content.RootDirectory = "../../Content";
             IsMouseVisible = true;
         }
@@ -31,8 +35,8 @@ namespace Dodgy.Application
             // TODO: Add your initialization logic here
             _players = new List<IPlayer>()
             {
-                _playerFactory.GetPlayerOne(Graphics.GraphicsDevice),
-                _playerFactory.GetPlayerTwo(Graphics.GraphicsDevice)
+                _playerFactory.GetPlayerOne(),
+                _playerFactory.GetPlayerTwo()
             };
 
             base.Initialize();
@@ -54,7 +58,7 @@ namespace Dodgy.Application
 
             foreach (var player in _players)
             {
-                player.Update((float)gameTime.ElapsedGameTime.TotalSeconds, Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
+                player.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
 
             base.Update(gameTime);
@@ -70,6 +74,7 @@ namespace Dodgy.Application
             {
                 player.Draw(_spriteBatch);
             }
+
             _spriteBatch.End();
 
             // TODO: Add your drawing code here
